@@ -18,13 +18,33 @@
         * {
             font-family: Montserrat, sans-serif;
         }
-        /* The main container that holds the question, options and next button */
+        /* The main container that holds the logo and the quiz */
         #question-container {
             display: flex;
             flex-direction: column;
             align-items: center;
             width: 100%;
             margin-top: 50px;
+        }
+        /* The logo is displayed at the top of the page */
+        img {
+            width: 250px;
+            height: 100%;
+            margin: 10px;
+        }
+        /* Get the logo to be displayed at the center of the page and remove the bottom spaces */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+        }
+        /* The main container that holds the question, options and next button */
+        #question-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
         }
         /* Question text format */
         #question {
@@ -89,6 +109,7 @@
     </style>
 </head>
 <body>
+    <img src="logo.png" alt="Pediafor Logo">
     <div id="question-container">
         <h1>General Knowledge Quiz</h1>
         <p id="question"></p>
