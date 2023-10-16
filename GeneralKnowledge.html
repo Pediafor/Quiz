@@ -3,65 +3,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--Responsive Site-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pediafor Quiz</title>
     <style>
-        body {
-            font-family: sans-serif;
+        * {
+            font-family: Montserrat, sans-serif;
         }
-
+        /* The main container that holds the question, options and next button */
         #question-container {
-            width: 500px;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            margin-top: 50px;
         }
-
-        #options button {
-            display: block;
-            margin: 10px 0;
-        }
-    /* A box with 3px border with around the question-container*/
-        #question-container {
-            border: 3px solid #000;
-            padding: 10px;
-        }
-            /* A box with 2px border with around the question to separate that from the options*/
+        /* Question text format */
         #question {
-            border: 2px solid #000;
-            padding: 10px;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
-            /* A box with 2px border with around the options*/
-        #options {
-            border: 2px solid #000;
-            padding: 10px;
-        }
-        
-        /* A box with 2px border with around the next button*/
-        #next-button {
-            border: 2px solid #000;
-            padding: 10px;
-        }
-
-        /* All options are stacked vertically with a small border around them with rounded corners*/
+        /* The options text format */
         #options button {
-            display: block;
-            margin: 10px 0;
-            border: 1px solid #000;
-            border-radius: 5px;
+            font-size: 16px;
+            font-weight: normal;
         }
-        /* A box with 2px border with around the score*/
-        #score {
-            border: 2px solid #000;
+        /* The next button and restart text format */
+        #next-button, #restart-button {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        /* The options are arranged vertically and their borders take full width of the screen */
+        #options {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+        /* Options are displayed as buttons with a margin of 10px */
+        #options button {
+            margin: 10px;
             padding: 10px;
+            border: 1px solid #4e4e4e;
+            border-radius: 5px;
+            background-color: #fff;
+            cursor: pointer;
         }
-
+        /* The options are highlighted when hovered over and turn blue when selected */
+        #options button:hover, #options button.selected {
+            background-color: #4e4e4e;
+            color: #fff;
+        }
+        /* The next button and restart buttons in color with hover effect*/
+        #next-button, #restart-button {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #fff;
+            border-radius: 5px;
+            background-color: #24a0ed;
+            cursor: pointer;
+            width: 100%;
+            color: #fff;
+        }
+        /* The next button and restart buttons are highlighted when hovered over and turn blue when selected */
+        #next-button:hover, #restart-button:hover {
+            background-color: #fff;
+            border: 2px solid #24a0ed;
+            color: #4e4e4e;
+        }
+        /* The next and restart are displayed on the same line */
+        #btns {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+        }
 
     </style>
 </head>
 <body>
     <div id="question-container">
-        <h1>Quiz Title</h1>
+        <h1>General Knowledge Quiz</h1>
         <p id="question"></p>
+        <output id="timer"></output>
         <div id="options"></div>
-        <button id="next-button">Next</button>
+        <div id="btns">
+            <button id="next-button">Next</button>
+            <button id="restart-button">Restart</button>
+    </div>
     </div>
 
     <script>
@@ -78,29 +106,39 @@
         // A Timer of 30 seconds for each question to be answered
         let time = 30;
 
-        // A function to start the timer and skip to next question if the time runs out without increaing the score
+
+        // Function for the timer at the timer tag at the top of the page
         function startTimer() {
-            setInterval(function() {
+            var timer = document.getElementById("timer");
+            var time = 30 * questions.length;
+            var interval = setInterval(function() {
+                timer.innerHTML = time;
                 time--;
-                if (time <= 0) {
-                    currentQuestionIndex++;
-                    showQuestion(currentQuestionIndex);
-                    time = 30;
+                if (time < 0) {
+                    clearInterval(interval);
+                    timer.innerHTML = "Time's up!";
                 }
-                document.getElementById("timer").innerHTML = time;
             }, 1000);
+            
         }
-        // A show timer function that displays the timer on the screen which updates every second and displays the time right
-        function showTimer() {
-            document.getElementById("timer").innerHTML = time;
-            // Timer shows the numbers in red when the time is less than 10 seconds
-            if (time < 10) {
-                document.getElementById("timer").style.color = "red";
-            }
-            // Timer is always displayed in the top right corner of the screen
-            document.getElementById("timer").style.position = "absolute";
-            document.getElementById("timer").style.top = "0px";
-            document.getElementById("timer").style.right = "0px";
+        
+        // Function to end the quiz and display the score
+        function endQuiz() {
+            questionContainer.innerHTML = `<h1>Quiz Completed</h1>
+            <h2>Your score is ${score}/${questions.length}</h2>`;
+            nextButton.style.display = 'none';
+             // Display the score along with quiz completed message
+             optionsElement.textContent = `Your score is ${score} out of ${questions.length}.`;
+                // To restart the quiz click on the restart button
+                document.getElementById("restart-button").addEventListener('click', () => restart());
+        }
+
+        // Function for Restart button
+        function restart() {
+            currentQuestionIndex = 0;
+            score = 0;
+            showQuestion(currentQuestionIndex);
+            nextButton.style.display = 'block';
         }
 
         // Fetch the questions from the JSON file
@@ -111,9 +149,11 @@
                 showQuestion(currentQuestionIndex);
                 startTimer();
                 showTimer();
+                showResponse();
             })
             .catch(error => console.error('Failed to fetch questions:', error));
 
+            
         function showQuestion(index) {
             if (index < questions.length) {
                 const question = questions[index];
@@ -123,27 +163,15 @@
                 for (let i = 0; i < question.options.length; i++) {
                     const option = document.createElement('button');
                     option.textContent = question.options[i];
+                    // Add a click event listener to each option and store the index of the option clicked
+                    var index = i;
+                    // When next button is clicked, check if the option clicked is correct or not
                     option.addEventListener('click', () => checkAnswer(index, i));
                     optionsElement.appendChild(option);
                     
                 }
             } else {
-                // Display the score along with quiz completed message
-                optionsElement.textContent = `Your score is ${score} out of ${questions.length}.`;
-                // Hide the next button
-                nextButton.style.display = 'none';
-                // Hide the last question when displaying the score
-                questionElement.textContent = '';
-                // To restart the quiz a restart button is added
-                const restartButton = document.createElement('button');
-                restartButton.textContent = 'Restart';
-                restartButton.addEventListener('click', () => {
-                    currentQuestionIndex = 0;
-                    score = 0;
-                    showQuestion(currentQuestionIndex);
-                    nextButton.style.display = 'block';
-                });
-                optionsElement.appendChild(restartButton);
+               endQuiz();
             }
         }
 
@@ -159,6 +187,8 @@
                 showQuestion(currentQuestionIndex);
             }
         }
+        // Restart button event listener
+        document.getElementById("restart-button").addEventListener('click', () => restart());
 
         nextButton.addEventListener('click', () => {
             currentQuestionIndex++;
