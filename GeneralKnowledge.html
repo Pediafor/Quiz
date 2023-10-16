@@ -115,8 +115,12 @@
                 timer.innerHTML = time;
                 time--;
                 if (time < 0) {
-                    clearInterval(interval);
                     timer.innerHTML = "Time's up!";
+                }
+                if(time == -1)
+                {
+                    clearInterval(interval);
+                    endQuiz();
                 }
             }, 1000);
             
