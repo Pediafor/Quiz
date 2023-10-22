@@ -1,26 +1,222 @@
-<!-- A static quiz website with the categories as different pages, load the quesitons from the json file-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--Responsive Site on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pediafor Quiz</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            font-family: Montserrat, sans-serif;
+        }
+        /* Your base styles for elements */
+        body {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: auto;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+        }
+
+        /* CSS classes for question styling */
+        .question {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* CSS classes for choices styling*/
+        .choices {
+            text-align: center;
+        }
+
+        /* CSS classes for button styling */
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #000;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #333;
+        }
+
+        /* CSS classes for quiz elements */
+        .quiz {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .choice {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #fff;
+            border: solid 1px #4e4e4e;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        /* Display options in a vertical layout with spaces between options*/
+        .quiz .choice {
+            display: block;
+            margin: 20px auto;
+        }
+
+        /* Correct answer should turn its border green and fill a very light green should overwrite hover*/
+        .correct-answer {
+            border-color: white;
+            background-color: #a6eba6;
+            border: solid 1px #4e4e4e;
+            border-radius: 5px;
+        }
+
+
+        /* Wrong answer should turn its border red and fill a very light red*/
+        .wrong-answer {
+            border-color: white;
+            background-color: #eba6a6;
+            border: solid 1px #4e4e4e;
+            border-radius: 5px;
+        }
+
+        /* Hover effect with transparancy*/
+        .choice:hover {
+            border-color: #24a0ed;
+            stroke-width: 1px;
+        }
+
+        /* CSS class for score */
+        .score {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* Image to be displayed on the top of the page and aligned to center*/
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 200px;
+        }
+
+        /* container takes up 99% of the width of the page and is centered on mobile screen*/
+        @media only screen and (max-width: 768px) {
+            .container {
+                width: 99%;
+                margin: auto;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <h1>Pediafor Quiz</h1>
-        <!-- A nav bar with categories of topic to pick-->
-        <nav>
-            <ul>
-                <li><a href="CurrentAffairs.html">Current Affairs</a></li>
-                <li><a href="GeneralKnowledge.html">General Knowledge</a></li>
-                <li><a href="Arithemetic.html">Arithmetic</a></li>
-                <li><a href="English.html">English</a></li>
-                <li><a href="Reasoning.html">Reasoning</a></li>
-                <li><a href="Computer.html">Computer</a></li>
-            </ul>
-        </nav>
-        
-            
+        <img src="logo.png" alt="Logo" title="Logo">
+        <h1>General Knowledge Quiz</h1>
+        <div class="quiz">
+            <div id="question" class="question"></div>
+            <div id="choices" class="choices"></div>
+            <button class="btn" id="submit" onclick="submitAnswer()">Submit Answer</button>
+            <div id="score" class="score"></div>
+        </div>
     </div>
+    <script>
+        const quiz = document.querySelector(".quiz");
+        const questionElement = document.querySelector(".question");
+        const choices = document.querySelector(".choices");
+        const scoreElement = document.querySelector(".score");
+        const submitButton = document.querySelector(".btn");
+      
+        let currentQuestion = 0;
+        let score = 0;
+        let quizCompleted = false;
+        let questions = [];
+      
+        // Function to load questions from the JSON file
+        async function loadQuestions() {
+          try {
+            const response = await fetch("GeneralKnowledge.json"); // Change the filename to your JSON file
+            if (!response.ok) {
+              throw new Error("Failed to load questions");
+            }
+            const data = await response.json();
+            questions = data.questions;
+            loadQuestion(); // Load the first question after successfully loading the questions
+          } catch (error) {
+            console.error(error);
+          }
+        }
+      
+        // Function to load a question
+        function loadQuestion() {
+          if (currentQuestion < questions.length) {
+            const current = questions[currentQuestion];
+            questionElement.textContent = current.question;
+      
+            choices.innerHTML = "";
+            current.options.forEach((choice, index) => {
+              const choiceElement = document.createElement("div");
+              choiceElement.textContent = choice;
+              choiceElement.className = "choice";
+              choiceElement.addEventListener("click", () => checkAnswer(index));
+              choices.appendChild(choiceElement);
+            });
+      
+            submitButton.style.display = "none";
+          } else {
+            quizCompleted = true;
+            questionElement.textContent = "Quiz Completed!";
+            choices.innerHTML = "";
+            scoreElement.textContent = `Your Score: ${score} / ${questions.length}`;
+          }
+        }
+      
+        // Function to check an answer
+        function checkAnswer(choiceIndex) {
+          if (quizCompleted) return;
+      
+          const current = questions[currentQuestion];
+          const choiceElements = choices.querySelectorAll(".choice");
+      
+          if (current.options[choiceIndex] === current.correctAnswer) {
+            choiceElements[choiceIndex].classList.add("correct-answer");
+            score++;
+          } else {
+            choiceElements[choiceIndex].classList.add("wrong-answer");
+            choiceElements[current.options.indexOf(current.correctAnswer)].classList.add("correct-answer");
+          }
+      
+          setTimeout(() => {
+            choiceElements.forEach((choiceElement) => {
+              choiceElement.classList.remove("correct-answer", "wrong-answer");
+            });
+      
+            currentQuestion++;
+            loadQuestion();
+          }, 1000); // 2000 milliseconds (2 seconds) delay
+        }
+      
+        // Function to submit an answer
+        function submitAnswer() {
+          // Add functionality for submitting answers if needed
+        }
+      
+        // Load questions from the JSON file
+        loadQuestions();
+      </script>
+</body>
 </html>
