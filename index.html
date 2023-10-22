@@ -23,7 +23,7 @@
         /* Horizontal alignment of the buttons and content*/
         .container {
             width: auto;
-            margin: auto;
+            margin: 0;
             background-color: #fff;
             padding: 20px;
             border-radius: 10px;
@@ -32,17 +32,17 @@
 
         h1 {
             text-align: center;
-            color: #000;
+            color: #4e4e4e;
         }
 
         p {
             text-align: center;
-            color: #000;
+            color: #4e4e4e;
         }
 
         a {
             text-align: center;
-            color: #000;
+            color: #4e4e4e;
         }
 
         /* CSS for button styling they take 50% screen and aligned to center*/
@@ -58,11 +58,12 @@
             width: 50%;
             margin: auto;
             align-items: center;
+            font-size: large;
         }
 
         button:hover {
             background-color: #fff;
-            color: #000;
+            color: #ed5622;
         }
 
         /* CSS for image styling */
@@ -77,8 +78,14 @@
         a {
             display: block;
             margin: 10px 0;
+            font-size: 20px bold;
         }
 
+        /* Text selection color */
+        ::selection {
+            background: #ed5622;
+            color: #fff;
+        }
     </style>
 </head>
 <body>

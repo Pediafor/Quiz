@@ -14,6 +14,7 @@
     <style>
         * {
             font-family: Montserrat, sans-serif;
+            color: #4e4e4e;
         }
         /* Your base styles for elements */
         body {
@@ -30,14 +31,15 @@
 
         h1 {
             text-align: center;
-            color: #000;
+            color: #4e4e4e;
         }
 
         /* CSS classes for question styling */
         .question {
-            font-size: 20px;
+            font-size: larger;
             font-weight: bold;
             margin-bottom: 20px;
+            color: #ed5622;
         }
 
         /* CSS classes for choices styling*/
@@ -49,7 +51,7 @@
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #000;
+            background-color: #ed5622;
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -76,6 +78,8 @@
             border-radius: 5px;
             cursor: pointer;
             transition: 0.3s;
+            font-size: larger;
+            font-weight: bold;
         }
         /* Display options in a vertical layout with spaces between options*/
         .quiz .choice {
@@ -86,23 +90,25 @@
         /* Correct answer should turn its border green and fill a very light green should overwrite hover*/
         .correct-answer {
             border-color: white;
-            background-color: #a6eba6;
-            border: solid 1px #4e4e4e;
+            background-color: #4db34d;
+            border: solid 1px #4db34d;
             border-radius: 5px;
+            color: #fff;
         }
 
 
         /* Wrong answer should turn its border red and fill a very light red*/
         .wrong-answer {
             border-color: white;
-            background-color: #eba6a6;
+            background-color: #ed5622;
             border: solid 1px #4e4e4e;
             border-radius: 5px;
+            color: #fff;
         }
 
         /* Hover effect with transparancy*/
         .choice:hover {
-            border-color: #24a0ed;
+            border-color: #ed5622;
             stroke-width: 1px;
         }
 
@@ -126,6 +132,12 @@
                 width: 99%;
                 margin: auto;
             }
+        }
+
+        /* Text selection color */
+        ::selection {
+            background: #ed5622;
+            color: #fff;
         }
     </style>
 </head>
