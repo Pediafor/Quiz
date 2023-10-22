@@ -1,0 +1,29 @@
+{
+    "questions": [
+        {
+            "question": "What is the capital of Japan?",
+            "options": ["Beijing", "Seoul", "Tokyo", "Bangkok"],
+            "correctAnswer": "Tokyo"
+        },
+        {
+            "question": "Who is the author of 'Pride and Prejudice'?",
+            "options": ["Emily Bronte", "Jane Austen", "Charlotte Bronte", "Charles Dickens"],
+            "correctAnswer": "Jane Austen"
+        },
+        {
+            "question": "What is the chemical symbol for gold?",
+            "options": ["Au", "Ag", "Fe", "Hg"],
+            "correctAnswer": "Au"
+        },
+        {
+            "question": "What is the largest planet in our solar system?",
+            "options": ["Mars", "Venus", "Jupiter", "Saturn"],
+            "correctAnswer": "Jupiter"
+        },
+        {
+            "question": "Who is the current President of the United States?",
+            "options": ["Donald Trump", "Joe Biden", "Barack Obama", "George Bush"],
+            "correctAnswer": "Joe Biden"
+        }
+    ]
+}

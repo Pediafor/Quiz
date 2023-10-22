@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="favicon.png" type="image/png" sizes="16x16">
     <meta property="og:title" content="Pediafor Quiz">
-    <meta property="og:description" content="Daily Quizes on Arithmetic by Pediafor">
+    <meta property="og:description" content="Daily Quizes on Computer by Pediafor">
     <meta property="og:image" content="pediafor_logo.jpg">
-    <meta property="og:url" content="https://pediafor.github.io/Quiz/Arithmetic.html">
-    <meta name="description" content="Pediafor Quiz on Arithmetic">
+    <meta property="og:url" content="https://pediafor.github.io/Quiz/Computer.html">
+    <meta name="description" content="Pediafor Quiz on Computer">
     <title>Pediafor Quiz</title>
     <style>
         * {
@@ -132,7 +132,7 @@
 <body>
     <div class="container">
         <img src="logo.png" alt="Logo" title="Logo">
-        <h1>Arithmetic Quiz</h1>
+        <h1>Computer Quiz</h1>
         <div class="quiz">
             <div id="question" class="question"></div>
             <div id="choices" class="choices"></div>
@@ -154,7 +154,7 @@
         // Function to load questions from the JSON file
         async function loadQuestions() {
           try {
-            const response = await fetch("Arithmetic.json"); // Change the filename to your JSON file
+            const response = await fetch("Computer.json"); // Change the filename to your JSON file
             if (!response.ok) {
               throw new Error("Failed to load questions");
             }
