@@ -3,24 +3,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!--Responsive Site on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="favicon.png" type="image/png" sizes="16x16">
+    <meta property="og:title" content="Pediafor Quiz">
+    <meta property="og:description" content="Daily Quizes by Pediafor">
+    <meta property="og:image" content="pediafor_logo.jpg">
+    <meta property="og:url" content="https://quiz.pediafor.com">
+    <meta name="description" content="Pediafor Quiz on Arithmetic">
     <title>Pediafor Quiz</title>
-    <link rel="stylesheet" href="css/style.css">
+    <style>
+        * {
+            font-family: Montserrat, sans-serif;
+        }
+        /* Your base styles for elements */
+        body {
+            background-color: #f2f2f2;
+        }
+        /* Horizontal alignment of the buttons and content*/
+        .container {
+            width: auto;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #000;
+        }
+
+        p {
+            text-align: center;
+            color: #000;
+        }
+
+        a {
+            text-align: center;
+            color: #000;
+        }
+
+        /* CSS for button styling they take 50% screen and aligned to center*/
+        button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #4e4e4e;
+            border: solid 2px #4e4e4e;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 50%;
+            margin: auto;
+            align-items: center;
+        }
+
+        button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        /* CSS for image styling */
+        img {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 200px;
+        }
+
+        /* Arrange all the buttons in a vertical way */
+        a {
+            display: block;
+            margin: 10px 0;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
+        <img src="logo.png" alt="Logo" title="Logo">
         <h1>Pediafor Quiz</h1>
-        <!-- A nav bar with categories of topic to pick-->
-        <nav>
-            <ul>
-                <li><a href="CurrentAffairs.html">Current Affairs</a></li>
-                <li><a href="GeneralKnowledge.html">General Knowledge</a></li>
-                <li><a href="Arithemetic.html">Arithmetic</a></li>
-                <li><a href="English.html">English</a></li>
-                <li><a href="Reasoning.html">Reasoning</a></li>
-                <li><a href="Computer.html">Computer</a></li>
-            </ul>
-        </nav>
-        
-            
+        <p>Select a category to start the quiz</p>
+
+        <!-- A vertical list of links to choose category-->
+        <a href="CurrentAffairs.html"><button>Current Affairs</button></a>
+        <a href="GeneralKnowledge.html"><button type="button">General Knowledge</button></a>
+        <a href="Arithmetic.html"><button type="button">Arithmetic</button></a>
+        <a href="English.html"><button type="button">English</button></a>
+        <a href="Reasoning.html"><button type="button">Reasoning</button></a>
+        <a href="Computer.html"><button type="button">Computer Science</button></a>    
     </div>
 </html>
